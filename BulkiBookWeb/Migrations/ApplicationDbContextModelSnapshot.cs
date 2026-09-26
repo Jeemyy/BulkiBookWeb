@@ -33,6 +33,9 @@ namespace BulkiBookWeb.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -46,18 +49,21 @@ namespace BulkiBookWeb.Migrations
                         {
                             Id = 1,
                             CreatedAt = new DateTime(2026, 9, 22, 0, 0, 0, 0, DateTimeKind.Utc),
+                            DisplayOrder = 1,
                             Name = "Action"
                         },
                         new
                         {
                             Id = 2,
                             CreatedAt = new DateTime(2026, 9, 22, 0, 0, 0, 0, DateTimeKind.Utc),
+                            DisplayOrder = 1,
                             Name = "Faylasofi"
                         },
                         new
                         {
                             Id = 3,
                             CreatedAt = new DateTime(2026, 9, 22, 0, 0, 0, 0, DateTimeKind.Utc),
+                            DisplayOrder = 1,
                             Name = "History"
                         });
                 });
