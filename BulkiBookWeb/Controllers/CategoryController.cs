@@ -1,5 +1,7 @@
 ﻿using BulkiBookWeb.Data;
+using BulkiBookWeb.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BulkiBookWeb.Controllers
 {
@@ -17,6 +19,25 @@ namespace BulkiBookWeb.Controllers
         }
         public IActionResult Create()
         {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ActionName("Create")]
+        public IActionResult CreatePost(Category category)
+        {
+            var categoryName = category.Name is null ? "": category.Name.ToLower();
+            var categoryNameIsExists = _context.Categories.Any(c => c.Name.ToLower() == categoryName);
+            if (!string.IsNullOrEmpty(category.Name) && categoryNameIsExists)
+            {
+                ModelState.AddModelError("", "Category name is already exists!");
+            }
+            if (ModelState.IsValid)
+            {
+                _context.Categories.Add(category);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
             return View();
         }
     }
