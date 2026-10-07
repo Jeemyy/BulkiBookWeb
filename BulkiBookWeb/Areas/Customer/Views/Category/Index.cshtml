@@ -1,0 +1,73 @@
+﻿@using BulkiBook.Models
+@model List<Category>
+
+<div class="container-fluid">
+    <div class="card border shadow-sm overflow-hidden">
+
+        <!-- Card Header -->
+        <div class="card-header text-white py-3 px-4"
+             style="background: linear-gradient(to right, #065f46, #282828, #191414);">
+
+            <div>
+                <h5 class="mb-0 fw-bold">
+                    <i class="bi bi-grid me-2"></i>
+                    <i class="bi bi-grid me-2"></i>
+                    Categories
+                </h5>
+
+                <p class="mb-0 small" style="color: #1DB954;">
+                    Manage your product categories
+                </p>
+            </div>
+            <a asp-controller="Category" asp-action="Create" class="btn btn-sm btn-outline-light fw-semibold d-inline-flex align-items-center gap-1">
+                <i class="bi bi-plus-lg"></i>
+                New Category
+            </a>
+        </div>
+
+        <!-- Table -->
+        <div class="table-responsive">
+            <table class="table table-styled mb-0">
+
+                <thead>
+                    <tr>
+                        <th>Category Name</th>
+                        <th>Display Order</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="fw-medium" style="color: #1e293b;">
+                                @item.Name
+                            </td>
+
+                            <td>
+                                <span class="badge bg-light text-dark border">
+                                    @item.DisplayOrder
+                                </span>
+                            </td>
+
+                            <td class="text-end">
+                                <!-- Edit -->
+                                <a asp-action="Update" asp-route-id="@item.Id" class="btn btn-sm btn-outline-success me-1">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                                <!-- Delete -->
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger me-1">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                                
+                            </td>
+                        </tr>                        
+                    }
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+</div>

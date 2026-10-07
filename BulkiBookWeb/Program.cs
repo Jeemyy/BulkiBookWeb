@@ -1,4 +1,5 @@
-using BulkiBookWeb.Data;
+using BulkiBook.Business;
+using BulkiBook.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace BulkiBookWeb
@@ -11,6 +12,8 @@ namespace BulkiBookWeb
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddBusiness();
+            
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             {
@@ -33,9 +36,17 @@ namespace BulkiBookWeb
             app.UseAuthorization();
 
             app.MapStaticAssets();
+
+            app.MapControllerRoute(
+               name: "MyArea",
+               pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}")
+               .WithStaticAssets();
+
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}")
+                pattern: "{controller=Home}/{action=Index}/{id?}",
+                defaults: new { area = "Customer" }
+                )
                 .WithStaticAssets();
 
             app.Run();

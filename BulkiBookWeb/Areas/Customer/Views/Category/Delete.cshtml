@@ -1,0 +1,84 @@
+﻿@using BulkiBook.Models
+@model Category
+
+<div class="container-fluid">
+    <div class="card border shadow-sm overflow-hidden">
+
+        <!-- Card Header -->
+        <div class="card-header text-white py-3 px-4"
+             style="background: linear-gradient(to right, #065f46, #282828, #191414);">
+
+            <div>
+                <h5 class="mb-0 fw-bold">
+                    <i class="bi bi-grid me-2"></i>
+                    Delete Category
+                </h5>
+
+                <p class="mb-0 small" style="color: #1DB954;">
+                    Delete category
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Form -->
+        <div class="card-body p-4">
+
+            <form method="post">
+                <input asp-for="Id" hidden />
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="row g-4">
+
+                    <!-- Category Name -->
+                    <div class="col-md-8">
+                        <label class="form-label fw-semibold">
+                            Category Name
+                        </label>
+
+                        <input asp-for="Name" readonly
+                               class="form-control" placeholder="Enter category name" />
+
+                        <span asp-validation-for="Name" class="text-danger small">
+                        </span>
+                    </div>
+
+                    <!-- Display Order -->
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">
+                            Display Order
+                        </label>
+
+                        <input asp-for="DisplayOrder" readonly
+                               type="number"
+                               class="form-control"
+                               placeholder="Enter display order" />
+
+                        <span asp-validation-for="DisplayOrder" class="text-danger small">
+                        </span>
+                    </div>
+
+                </div>
+
+                <!-- Buttons -->
+                <div class="d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
+
+                    <a asp-controller="Category" asp-action="Index" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left me-1"></i>
+                        Cancel
+                    </a>
+
+                    <input type="submit"
+                           class="btn text-white btn-danger">
+                    </input>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
