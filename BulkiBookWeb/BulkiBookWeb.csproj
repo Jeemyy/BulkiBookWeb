@@ -24,4 +24,14 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BulkiBooks.Business\BulkiBook.Business.csproj" />
+    <ProjectReference Include="..\BulkiBooks.DataAccess\BulkiBook.DataAccess.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Controllers\" />
+    <Folder Include="Areas\Admin\Views\" />
+  </ItemGroup>
+
 </Project>
