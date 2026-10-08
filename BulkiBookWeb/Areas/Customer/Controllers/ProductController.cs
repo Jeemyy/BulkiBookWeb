@@ -1,7 +1,8 @@
 ﻿using BulkiBook.Business.Interfaces;
 using BulkyBook.Models;
+using BulkyBook.Models.ModelViews;
 using Microsoft.AspNetCore.Mvc;
-//using System.Web.Helpers;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BulkiBookWeb.Areas.Customer.Controllers
 {
@@ -9,35 +10,64 @@ namespace BulkiBookWeb.Areas.Customer.Controllers
     public class ProductController : Controller
     {
         private readonly IProductServices _productServices;
-        public ProductController(IProductServices product)
+        private readonly ICategoryServices _categoryServices;
+        public ProductController(IProductServices product, ICategoryServices category)
         {
             _productServices = product;
+            _categoryServices = category;
         }
         public async Task<IActionResult> Index()
         {
             var products = await _productServices.GetAllProductsAsync();
             return View(products);
         }
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            var categories = await _categoryServices.GetAllCategoriesAsync();
+            ProductVM productVm = new()
+            {
+                CategoryList = categories.Select(c => new SelectListItem 
+                {
+                    Text = c.Name,
+                    Value = c.Id.ToString()
+                }),
+                Product = new Product()
+            };
+            return View(productVm);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("Create")]
-        public async Task<IActionResult> CreatePost(Product product)
+        public async Task<IActionResult> CreatePost(ProductVM productVm, IFormFile imageFile)
         {
-            if (!string.IsNullOrEmpty(product.Title) && await _productServices.IsProductNameIsUniqueAsync(product.Title))
+            if (!string.IsNullOrEmpty(productVm.Product.Title) &&
+                await _productServices.IsProductNameIsUniqueAsync(productVm.Product.Title))
             {
-                ModelState.AddModelError("Title", "A product with this title already exists.");
+                ModelState.AddModelError(
+                    "Product.Title",
+                    "A product with this title already exists.");
             }
+
             if (ModelState.IsValid)
             {
-                await _productServices.CreateProductAsync(product);
-                TempData["Success"] = "Create product Successfully.";
+                await _productServices.CreateProductAsync(productVm.Product);
+
+                TempData["success"] = "Create product successfully.";
+
                 return RedirectToAction("Index");
             }
-            return View();
+
+            // IMPORTANT: rebuild CategoryList
+            var categories = await _categoryServices.GetAllCategoriesAsync();
+
+            productVm.CategoryList = categories.Select(c => new SelectListItem
+            {
+                Text = c.Name,
+                Value = c.Id.ToString()
+            });
+
+            return View(productVm);
         }
         public async Task<IActionResult> Delete(int id)
         {
