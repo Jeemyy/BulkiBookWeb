@@ -1,8 +1,10 @@
 ﻿using BulkiBook.Business.Interfaces;
 using BulkiBook.DataAccess.Data;
 using BulkyBook.Models;
+using BulkyBook.Models.ModelViews;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace BulkiBook.Business.Services
 {

@@ -140,14 +140,14 @@
 				<div class="col-md-12">
                 <!-- Product.ImgageUrl -->
                     <label class="form-label fw-semibold" asp-for="Product.ImageUrl"></label>
-                <div class="border border-2 border-dashed rounded p-4 text-center">
-                    <i class="bi bi-could-upload fs-4 text-secondary"></i>
-                    <input asp-for="Product.ImageUrl" type="file" accept="image/*" 
-                           class="form-control form-control-sm mt-2" placeholder="Enter Image URL" />
+                    <div class="border border-2 border-dashed rounded p-4 text-center">
+                        <i class="bi bi-could-upload fs-4 text-secondary"></i>
+                        <input asp-for="Product.ImageUrl" type="file" accept="image/*" 
+                               class="form-control form-control-sm mt-2" placeholder="Enter Image URL" />
 
-                    <span asp-validation-for="Product.ImageUrl" class="text-danger small">
-                    </span>
-                </div>
+                        <span asp-validation-for="Product.ImageUrl" class="text-danger small">
+                        </span>
+                    </div>
                 </div>
 
                 <!-- Buttons -->
