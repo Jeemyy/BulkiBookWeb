@@ -3,7 +3,6 @@ using BulkyBook.Models;
 using BulkyBook.Models.ModelViews;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Runtime.CompilerServices;
 
 namespace BulkiBookWeb.Areas.Customer.Controllers
 {
@@ -13,11 +12,13 @@ namespace BulkiBookWeb.Areas.Customer.Controllers
         private readonly IProductServices _productServices;
         private readonly ICategoryServices _categoryServices;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public ProductController(IProductServices product, ICategoryServices category, IWebHostEnvironment webHost)
+        private readonly IFileServices _fileServices;
+        public ProductController(IProductServices product, ICategoryServices category, IWebHostEnvironment webHost, IFileServices fileServices)
         {
             _productServices    = product;
             _categoryServices   = category;
             _webHostEnvironment = webHost;
+            _fileServices = fileServices;
         }
         public async Task<IActionResult> Index()
         {
@@ -51,21 +52,9 @@ namespace BulkiBookWeb.Areas.Customer.Controllers
             }
             if (ModelState.IsValid)
             {
-                var wwwRootPath = _webHostEnvironment.WebRootPath;
-                if (imageFile is not null)
+                if(imageFile is not null && imageFile.Length > 0)
                 {
-                    var fileExtention = Path.GetExtension(imageFile.FileName);
-                    string fileName = Guid.NewGuid() + fileExtention;
-                    string productPath = Path.Combine("images", "prodcut");
-                    string finalPath = Path.Combine(wwwRootPath, productPath);
-
-                    Directory.CreateDirectory(finalPath);
-                    using (var fileStream = new FileStream(Path.Combine(finalPath, fileName), FileMode.Create))
-                    {
-                        imageFile.CopyTo(fileStream);
-                    }
-                    //productVm.Product.ImageUrl = Path.Combine(@"\", productPath, fileName).Replace("\\", "/");
-                    productVm.Product.ImageUrl =$"/images/product/{fileName}";
+                    productVm.Product.ImageUrl = await _fileServices.CreateFileImageAsync(imageFile);
                 }
 
                 await _productServices.CreateProductAsync(productVm.Product);

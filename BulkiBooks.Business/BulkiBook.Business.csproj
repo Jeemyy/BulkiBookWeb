@@ -11,5 +11,7 @@
     <ProjectReference Include="..\BulkiBooks.Utility\BulkiBook.Utility.csproj" />
     <ProjectReference Include="..\BulkyBook.Models\BulkyBook.Models.csproj" />
   </ItemGroup>
-
+    <ItemGroup>
+      <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    </ItemGroup>
 </Project>
