@@ -1,7 +1,6 @@
 ﻿using BulkiBook.Business.Interfaces;
 using BulkiBook.Business.Services;
 using Microsoft.Extensions.DependencyInjection;
-using System.Runtime.CompilerServices;
 
 namespace BulkiBook.Business
 {
@@ -11,6 +10,7 @@ namespace BulkiBook.Business
         {
             services.AddScoped<ICategoryServices, CategoryServices>();
             services.AddScoped<IProductServices, ProductServices>();
+            services.AddScoped<IFileServices, FileServices>();
             return services;
         }
     }
