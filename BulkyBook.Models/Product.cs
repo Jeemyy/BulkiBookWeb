@@ -41,6 +41,5 @@ namespace BulkyBook.Models
         [ValidateNever]
         [Display(Name = "Product Image")]
         public string? ImageUrl { get; set; }
-        //public IFormFile? Image { get; set; }
     }
 }

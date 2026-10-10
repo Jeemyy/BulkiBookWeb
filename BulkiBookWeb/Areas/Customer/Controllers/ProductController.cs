@@ -64,7 +64,8 @@ namespace BulkiBookWeb.Areas.Customer.Controllers
                     {
                         imageFile.CopyTo(fileStream);
                     }
-                    productVm.Product.ImageUrl = Path.Combine(@"\", productPath, fileName).Replace("\\", "/");
+                    //productVm.Product.ImageUrl = Path.Combine(@"\", productPath, fileName).Replace("\\", "/");
+                    productVm.Product.ImageUrl =$"/images/product/{fileName}";
                 }
 
                 await _productServices.CreateProductAsync(productVm.Product);
