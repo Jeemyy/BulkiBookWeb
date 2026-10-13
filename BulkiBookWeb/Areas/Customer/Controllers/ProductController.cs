@@ -15,8 +15,8 @@ namespace BulkiBookWeb.Areas.Customer.Controllers
         private readonly IFileServices _fileServices;
         public ProductController(IProductServices product, ICategoryServices category, IWebHostEnvironment webHost, IFileServices fileServices)
         {
-            _productServices    = product;
-            _categoryServices   = category;
+            _productServices = product;
+            _categoryServices = category;
             _webHostEnvironment = webHost;
             _fileServices = fileServices;
         }
@@ -25,39 +25,53 @@ namespace BulkiBookWeb.Areas.Customer.Controllers
             var products = await _productServices.GetAllProductsAsync();
             return View(products);
         }
-        public async Task<IActionResult> Create()
+
+
+        public async Task<IActionResult> Upsert(int? id)
         {
             var categories = await _categoryServices.GetAllCategoriesAsync();
             ProductVM productVm = new()
             {
-                CategoryList = categories.Select(c => new SelectListItem 
+                CategoryList = categories.Select(c => new SelectListItem
                 {
                     Text = c.Name,
                     Value = c.Id.ToString()
                 }),
                 Product = new Product()
             };
-            return View(productVm);
+
+            if (id == null || id == 0)
+            {
+                return View(productVm);
+            }
+            else
+            {
+                productVm.Product = await _productServices.GetProductByIdAsync(id.Value);
+                return View(productVm);
+            }
+
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [ActionName("Create")]
-        public async Task<IActionResult> CreatePost(ProductVM productVm, IFormFile? imageFile)
+        [ActionName("Upsert")]
+        public async Task<IActionResult> UpsertPost(ProductVM productVm, IFormFile? imageFile)
         {
-            var productTitleUnique = await _productServices.IsProductNameIsUniqueAsync(productVm.Product.Title);
-            if (!string.IsNullOrEmpty(productVm.Product.Title) && productTitleUnique)
-            {
-                ModelState.AddModelError("", "Category name is already exists!");
-            }
             if (ModelState.IsValid)
             {
-                if(imageFile is not null && imageFile.Length > 0)
+                if (imageFile is not null && imageFile.Length > 0)
                 {
                     productVm.Product.ImageUrl = await _fileServices.CreateFileImageAsync(imageFile);
                 }
 
-                await _productServices.CreateProductAsync(productVm.Product);
+                if (productVm.Product.Id == 0 || productVm.Product.Id == null)
+                {
+                    await _productServices.CreateProductAsync(productVm.Product);
+                }
+                else
+                {
+                    await _productServices.UpdateProductByIdAsync(productVm.Product);
+                }
                 TempData["Success"] = "Product Created Successfully";
                 return RedirectToAction("Index");
             }
@@ -80,7 +94,7 @@ namespace BulkiBookWeb.Areas.Customer.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            if(id == 0)
+            if (id == 0)
             {
                 return NotFound();
             }
@@ -93,7 +107,7 @@ namespace BulkiBookWeb.Areas.Customer.Controllers
         [ActionName("Delete")]
         public async Task<IActionResult> DeletePost(Product product)
         {
-            if(product is null)
+            if (product is null)
             {
                 return NotFound();
             }
