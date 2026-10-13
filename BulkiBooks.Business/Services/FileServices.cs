@@ -32,14 +32,14 @@ namespace BulkiBook.Business.Services
                 throw new InvalidOperationException("File size exceeds the limit of 5 MB.");
             }
 
-            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png" };
+            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".webp" };
 
             var fileExtension = Path.GetExtension(imageFile.FileName);
             var fileName = $"{Guid.NewGuid()}{fileExtension}";
 
             if(!allowedExtensions.Contains(fileExtension.ToLower()))
             {
-                throw new InvalidOperationException("Invalid file extension. Only .jpg, .jpeg, and .png are allowed.");
+                throw new InvalidOperationException("Invalid file extension. Only .jpg, .jpeg, .png, and .webp are allowed.");
             }
 
             var productPath = Path.Combine("images", "products");
