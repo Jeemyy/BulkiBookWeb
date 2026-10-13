@@ -77,29 +77,29 @@ namespace BulkiBookWeb.Areas.Customer.Controllers
             }
         }
 
-
-        public async Task<IActionResult> Delete(int id)
+        [HttpDelete("/product/delete/{id:int}")]
+        public async Task<IActionResult> Delete(int? id)
         {
-            if(id == 0)
+            if (id == null || id == 0)
             {
-                return NotFound();
+                return Json(new { success = false, message = "Invalid product ID" });
             }
-            var product = await _productServices.GetProductByIdAsync(id);
-            return View(product);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [ActionName("Delete")]
-        public async Task<IActionResult> DeletePost(Product product)
-        {
+            var product = await _productServices.GetProductByIdAsync(id.Value);
             if(product is null)
             {
-                return NotFound();
+                return Json(new { success = false, message = "Product not found" });
             }
-            await _productServices.DeleteProductByIdAsync(product.Id);
-            TempData["Success"] = "Delete Product Successfully";
-            return RedirectToAction("Index");
+            if(product.ImageUrl is null)
+            {
+                return Json(new { success = false, message = "Product image not found" });
+            }
+            var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, product.ImageUrl.TrimStart('\\', '/'));
+            if (System.IO.File.Exists(imagePath))
+            {
+                System.IO.File.Delete(imagePath);
+            }
+            await _productServices.DeleteProductByIdAsync(id.Value);
+            return Json(new { success = true, message = "Product deleted successfully" });
         }
 
         /// <summary>
