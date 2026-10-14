@@ -4,9 +4,9 @@ using BulkyBook.Models.ModelViews;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace BulkiBookWeb.Areas.Customer.Controllers
+namespace BulkiBookWeb.Areas.Admin.Controllers
 {
-    [Area("Customer")]
+    [Area("Admin")]
     public class ProductController : Controller
     {
         private readonly IProductServices _productServices;
@@ -110,6 +110,12 @@ namespace BulkiBookWeb.Areas.Customer.Controllers
             if (product is null)
             {
                 return NotFound();
+            }
+            var image = product.ImageUrl;
+            var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, product.ImageUrl.TrimStart('\\', '/'));
+            if (System.IO.File.Exists(imagePath))
+            {
+                System.IO.File.Delete(imagePath);
             }
             await _productServices.DeleteProductByIdAsync(product.Id);
             TempData["Success"] = "Delete Product Successfully";

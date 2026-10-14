@@ -48,6 +48,11 @@ namespace BulkiBookWeb
                 defaults: new { area = "Customer" }
                 )
                 .WithStaticAssets();
+            //app.MapControllerRoute(
+            //    name: "default",
+            //    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}",
+            //    defaults: new { area = "Admin" }
+            //    ).WithStaticAssets();
 
             app.Run();
         }
