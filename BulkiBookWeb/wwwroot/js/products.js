@@ -1,5 +1,5 @@
 ﻿new DataTable('#tblData', {
-    ajax: '/product/getall',
+    ajax: '/admin/product/getall',
     columns: [
         { data: 'title', width: "25%" },
         { data: 'isbn', width: "20%" },
@@ -16,14 +16,14 @@
             data: 'id', render: function (data)
             {
                 return ` <div class="d-flex justify-content-end gap-2">
-                            <a href="/product/upsert?id=${data}" class="btn btn-small btn-outline-success">
+                            <a href="/admin/product/upsert?id=${data}" class="btn btn-small btn-outline-success">
                                 <i class="bi bi-pencil-square"></i> Edit
                             </a>
-                            <a href="/product/delete?id=${data}" class="btn btn-small btn-outline-danger">
+                            <a href="/admin/product/delete?id=${data}" class="btn btn-small btn-outline-danger">
                                 <i class="bi bi-pencil-trash"></i> Delete
                             </a>
                         </div> `
             }
         }
     ]
-} );
+} ); 
