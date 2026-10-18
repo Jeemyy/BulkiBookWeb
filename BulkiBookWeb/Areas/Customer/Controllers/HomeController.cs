@@ -1,6 +1,5 @@
 using BulkiBook.Business.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.Runtime.InteropServices;
 
 namespace BulkiBookWeb.Areas.Customer.Controllers
 {
