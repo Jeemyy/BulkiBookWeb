@@ -1,0 +1,173 @@
+﻿@model Product
+<section class="details-page py-5">
+	<div class="container">
+
+		<!-- Product Header -->
+		<div class="details-header">
+			<div class="row align-items-center g-3">
+				<div class="col-lg-7">
+					<span class="details-eyebrow">BOOK DETAILS</span>
+
+					<h1 class="details-title mt-2">
+						@Model.Title 
+					</h1>
+
+					<p class="details-author mb-0">
+						<i class="bi bi-person me-2"></i>
+						@Model.Author
+					</p>
+				</div>
+
+				<div class="col-lg-5">
+					<div class="details-badges">
+						<span class="details-badge">
+							<i class="bi bi-bookmark me-1"></i>
+							Paperback
+						</span>
+
+						<span class="details-badge details-badge-green">
+							Programming
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Product Content -->
+		<div class="details-card">
+			<div class="row g-4 g-lg-5">
+
+				<!-- Book Information -->
+				<div class="col-lg-7 order-2 order-lg-1">
+					<div class="book-info">
+
+						<div class="isbn-box mb-4">
+							<span class="info-label">ISBN</span>
+							<span class="info-value">@Model.ISBN</span>
+						</div>
+
+						<div class="price-heading">
+							<div>
+								<span class="info-label">Original price</span>
+								<div class="original-price">@Model.Price.ToString("c")</div>
+							</div>
+
+							<div class="price-highlight">
+								<span class="info-label">Starting at</span>
+								<strong>@Model.ListPrice.ToString("c")</strong>
+							</div>
+						</div>
+
+						<!-- Quantity Pricing -->
+						<h5 class="content-heading mt-4">
+							<i class="bi bi-tags me-2"></i>
+							Bulk Pricing
+						</h5>
+
+						<div class="table-responsive">
+							<table class="table pricing-table text-center align-middle">
+								<thead>
+									<tr>
+										<th>Quantity</th>
+										<th>1–50</th>
+										<th>51–100</th>
+										<th>100+</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									<tr>
+										<th>Price</th>
+										<td>@Model.Price.ToString("c")</td>
+										<td>@Model.Price50.ToString("c")</td>
+										<td>@Model.Price100.ToString("c")</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<!-- Description -->
+						<div class="description-section mt-4">
+							<h5 class="content-heading">About this book</h5>
+
+							<p>
+								@Html.Raw(Model.Description)
+							</p>
+						</div>
+
+						<!-- Quantity -->
+						<div class="quantity-section mt-4">
+							<label for="quantity" class="form-label">
+								Quantity
+							</label>
+
+							<div class="quantity-control">
+								<input type="number"
+									   id="quantity"
+									   name="quantity"
+									   class="form-control"
+									   value="1"
+									   min="1"
+									   max="100"
+									   step="1" />
+
+								<span class="quantity-hint">
+									<i class="bi bi-info-circle me-1"></i>
+									Select the number of copies.
+								</span>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+				<!-- Book Image -->
+				<div class="col-lg-5 order-1 order-lg-2">
+					<div class="book-preview">
+						
+						<div class="book-cover">
+							@if (string.IsNullOrEmpty(Model.ImageUrl))
+							{
+								<i class="bi bi-journal-bookmark"></i>
+								<span>THE ART OF</span>
+								<h3>CLEAN CODE</h3>
+								<div class="cover-divider"></div>
+								<small>WRITE BETTER SOFTWARE</small>
+
+							}
+							else
+							{
+								<span class="preview-label">
+									@* <i class="bi bi-book me-1"></i> *@
+									Book Cover
+								<img src="@Model.ImageUrl" alt="Book Cover" />
+								</span>
+							}
+						</div>
+						<div class="preview-caption">
+							<i class="bi bi-check-circle-fill me-2"></i>
+							Quality reading, better coding.
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<!-- Footer Actions -->
+			<div class="details-footer">
+				<a asp-controller="Home"
+				   asp-action="Index"
+				   class="btn btn-back">
+					<i class="bi bi-arrow-left me-2"></i>
+					Back to Home
+				</a>
+
+				<button type="button" class="btn btn-add-cart">
+					<i class="bi bi-cart-plus me-2"></i>
+					Add to Cart
+				</button>
+			</div>
+		</div>
+
+	</div>
+</section>
