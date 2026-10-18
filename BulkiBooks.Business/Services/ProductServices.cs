@@ -44,14 +44,16 @@ namespace BulkiBook.Business.Services
             }
         }
 
-        public async Task<Product> GetProductByIdAsync(int id)
+        public async Task<Product> GetProductByIdAsync(int id, bool inclutdeCategory = false)
         {
-            var product = await _context.Products.FindAsync(id);
-            if (product is null)
+            if (inclutdeCategory)
             {
-                throw new ValidationException("Product not found.");
+                return await _context.Products.Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
             }
-            return product;
+            else
+            {
+                return await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
+            }
         }
 
         public async Task<bool> IsProductNameIsUniqueAsync(string productName, int? productId = null)

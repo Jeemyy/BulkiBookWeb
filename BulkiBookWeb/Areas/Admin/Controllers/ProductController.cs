@@ -113,10 +113,11 @@ namespace BulkiBookWeb.Areas.Admin.Controllers
             }
             var image = product.ImageUrl;
             var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, product.ImageUrl.TrimStart('\\', '/'));
-            if (System.IO.File.Exists(imagePath))
+            if (!string.IsNullOrEmpty(image) && System.IO.File.Exists(imagePath))
             {
                 System.IO.File.Delete(imagePath);
             }
+          
             await _productServices.DeleteProductByIdAsync(product.Id);
             TempData["Success"] = "Delete Product Successfully";
             return RedirectToAction("Index");
