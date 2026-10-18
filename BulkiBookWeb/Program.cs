@@ -1,5 +1,7 @@
 using BulkiBook.Business;
 using BulkiBook.DataAccess.Data;
+using BulkyBook.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace BulkiBookWeb
@@ -13,7 +15,8 @@ namespace BulkiBookWeb
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddBusiness();
-            
+
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             {
@@ -33,6 +36,7 @@ namespace BulkiBookWeb
             app.UseHttpsRedirection();
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapStaticAssets();
