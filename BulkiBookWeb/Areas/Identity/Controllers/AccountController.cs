@@ -1,9 +1,7 @@
-﻿using BulkiBook.DataAccess.Migrations;
 using BulkyBook.Models;
 using BulkyBook.Models.ModelViews;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 namespace BulkiBookWeb.Areas.Identity.Controllers
 {
     [Area("Identity")]
