@@ -1,9 +1,6 @@
 /* ============================================
    Layout — Nav, Footer, Cards, Buttons
    ============================================ */
-.improve{
-    margin-top: 20px;
-}
 .btn-glow:hover {
     box-shadow: 0 0 20px rgba(23, 163, 74, 0.4);
 }
@@ -1721,3 +1718,42 @@ body {
             width: 100%;
         }
 }
+
+/* Auth */
+
+.auth-page {
+    color: #fff;
+    min-height: 100vh;
+    background: linear-gradient(120deg, #003b2e, #282828, #191414);
+}
+
+.auth-card {
+    max-width: 540px;
+    background: #f8fafb;
+}
+
+.register-card {
+    max-width: 720px;
+}
+
+.btn-auth {
+    color: #fff;
+    background: #065f46;
+    border: 1px solid #065f46;
+    border-radius: 8px;
+}
+
+.btn-auth:hover {
+    color: #fff;
+    background: #047857;
+}
+
+.auth-card .form-control {
+    min-height: 44px;
+}
+
+.auth-card .form-control:focus {
+    border-color: #065f46;
+    box-shadow: 0 0 0 0.2rem rgb(6 95 70 / 15%);
+}
+
