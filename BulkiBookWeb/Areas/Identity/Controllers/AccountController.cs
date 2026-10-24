@@ -1,7 +1,9 @@
+using BulkiBook.Utility;
 using BulkyBook.Models;
 using BulkyBook.Models.ModelViews;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 namespace BulkiBookWeb.Areas.Identity.Controllers
 {
     [Area("Identity")]
@@ -9,10 +11,12 @@ namespace BulkiBookWeb.Areas.Identity.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        public AccountController(UserManager<ApplicationUser> user, SignInManager<ApplicationUser> sign)
+        private readonly RoleManager<IdentityRole> _roleManager;
+        public AccountController(UserManager<ApplicationUser> user, SignInManager<ApplicationUser> sign, RoleManager<IdentityRole> role)
         {
             _userManager    = user;
             _signInManager  = sign;
+            _roleManager    = role;
         }
         public IActionResult Login()
         {
@@ -22,7 +26,20 @@ namespace BulkiBookWeb.Areas.Identity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginVM login)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                var result = await _signInManager.PasswordSignInAsync(login.Email, login.Password,
+                    login.RememberMe, lockoutOnFailure: false);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home", new { area = "Customer" });
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid Login");
+                }
+            }
+            return View(login);
         }
         public IActionResult Register()
         {
@@ -32,6 +49,12 @@ namespace BulkiBookWeb.Areas.Identity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterVM register)
         {
+            if (!await _roleManager.RoleExistsAsync(SD.RoleCustomer))
+            {
+                await _roleManager.CreateAsync(new IdentityRole(SD.RoleCustomer));
+                await _roleManager.CreateAsync(new IdentityRole(SD.RoleAdmin));
+                await _roleManager.CreateAsync(new IdentityRole(SD.RoleEmployee));
+            }
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser

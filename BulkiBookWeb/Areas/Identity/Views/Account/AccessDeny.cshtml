@@ -1,0 +1,81 @@
+﻿
+<div class="auth-page">
+    <main class="container py-5">
+
+        <!-- Page Introduction -->
+        <section class="auth-intro mb-4 text-center">
+            <span class="auth-eyebrow">Restricted Area</span>
+            <h1>Access Denied</h1>
+            <p>
+                You don't have permission to access this page.
+                Please sign in with an authorized account.
+            </p>
+        </section>
+
+        <!-- Access Denied Card -->
+        <div class="card auth-card access-denied-card mx-auto shadow">
+            <div class="card-body p-4 p-md-5">
+
+                <div class="text-center">
+
+                    <!-- Brand -->
+                    <div class="mb-4">
+                        <i class="bi bi-book-half auth-icon"></i>
+
+                        <h2 class="auth-logo">
+                            Bulki<span>Book</span>
+                        </h2>
+
+                        <p class="text-secondary mb-0">
+                            Your Book Store &amp; Library
+                        </p>
+                    </div>
+
+                    <!-- Access Denied Icon -->
+                    <div class="access-denied-icon mx-auto mb-4">
+                        <i class="bi bi-shield-lock-fill"></i>
+                    </div>
+
+                    <h3 class="access-denied-title mb-3">
+                        Permission Required
+                    </h3>
+
+                    <p class="access-denied-description mb-4">
+                        Sorry, your current account doesn't have the
+                        required permissions to view this page.
+                        If you believe this is a mistake, please contact
+                        the administrator.
+                    </p>
+
+                    <!-- Actions -->
+                    <div class="d-grid gap-3">
+
+                        <a asp-controller="Home" asp-area="Customer"
+                           asp-action="Index"
+                           class="btn btn-auth w-100">
+                            <i class="bi bi-house-door me-2"></i>
+                            Back to Home
+                        </a>
+
+                        <a asp-area="Identity"
+                           asp-controller="Account"
+                           asp-action="Login"
+                           class="btn btn-auth-outline w-100">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>
+                            Sign in with another account
+                        </a>
+
+                    </div>
+
+                    <p class="text-secondary small mt-4 mb-0">
+                        <i class="bi bi-info-circle me-1"></i>
+                        Need help? Contact your administrator.
+                    </p>
+
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+</div>

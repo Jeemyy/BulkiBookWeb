@@ -1,6 +1,7 @@
 ﻿using BulkiBook.Business.Interfaces;
 using BulkyBook.Models;
 using BulkyBook.Models.ModelViews;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -25,7 +26,6 @@ namespace BulkiBookWeb.Areas.Admin.Controllers
             var products = await _productServices.GetAllProductsAsync();
             return View(products);
         }
-
 
         public async Task<IActionResult> Upsert(int? id)
         {
@@ -126,6 +126,7 @@ namespace BulkiBookWeb.Areas.Admin.Controllers
         /// <summary>
         ///     Region For API Calls For Product Controller
         /// </summary>
+        /// 
         public async Task<IActionResult> getAll(Product product)
         {
             var products = await _productServices.GetAllProductsAsync();

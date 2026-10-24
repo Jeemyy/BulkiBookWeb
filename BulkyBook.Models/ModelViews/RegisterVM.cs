@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace BulkyBook.Models.ModelViews
 {
@@ -36,5 +38,9 @@ namespace BulkyBook.Models.ModelViews
         [Phone(ErrorMessage = "Please enter a valid phone number")]
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; } = string.Empty;
+        [Required]
+        public string Role { get; set; }
+        [ValidateNever]
+        public IEnumerable<SelectListItem> RoleList { get; set; }
     }
 }

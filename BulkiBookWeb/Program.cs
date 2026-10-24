@@ -16,9 +16,25 @@ namespace BulkiBookWeb
             builder.Services.AddControllersWithViews();
             builder.Services.AddBusiness();
 
-            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                options.Password.RequireDigit           = true;
+                options.Password.RequireLowercase       = true;
+                options.Password.RequireUppercase       = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequiredLength         = 7;
+                options.Password.RequiredUniqueChars    = 1;
+            })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
+            //builder.Services.ConfigureApplicationCookie(options =>
+            //{
+            //    options.LoginPath           = "/Identity/Account/Login";
+            //    options.LogoutPath          = "/identity/account/logout";
+            //    options.AccessDeniedPath    = "/identity/account/accessDeny";
+            //    options.ExpireTimeSpan      = TimeSpan.FromDays(30);
+            //});
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             {
