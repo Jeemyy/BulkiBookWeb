@@ -15,7 +15,7 @@
         {
             data: 'id', render: function (data)
             {
-                return ` <div class="d-flex justify-content-end gap-2">
+                return ` <div class="d-flex justify-content-end gap-2 fs-5">
                             <a href="/admin/product/upsert?id=${data}" class="btn btn-small btn-outline-success">
                                 <i class="bi bi-pencil-square"></i> Edit
                             </a>

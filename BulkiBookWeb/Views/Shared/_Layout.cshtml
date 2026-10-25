@@ -40,12 +40,15 @@
 						<li class="nav-item">
 							<a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Privacy">Privacy</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" asp-area="Admin" asp-controller="Product" asp-action="Index">Product</a>
-						</li>
+						@if (User.IsInRole(SD.RoleAdmin) || User.IsInRole(SD.RoleEmployee))
+						{
+							<li class="nav-item">
+								<a class="nav-link" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+									<i class="bi bi-speedometer2 me-1"></i>
+									Admin Panal
+								</a>
+							</li>
+						}
 					</ul>
 					<div class="d-flex align-items-center gap-3">
 						<partial name="_LoginPartial" />
