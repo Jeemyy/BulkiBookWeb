@@ -18,13 +18,14 @@ namespace BulkiBookWeb.Areas.Identity.Controllers
             _signInManager  = sign;
             _roleManager    = role;
         }
-        public IActionResult Login()
+        public IActionResult Login(string? returnUrl = null)
         {
+            ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginVM login)
+        public async Task<IActionResult> Login(LoginVM login, string? returnUrl = null)
         {
             if (ModelState.IsValid)
             {
@@ -32,6 +33,10 @@ namespace BulkiBookWeb.Areas.Identity.Controllers
                     login.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                    {
+                        Redirect(returnUrl);
+                    }
                     return RedirectToAction("Index", "Home", new { area = "Customer" });
                 }
                 else
@@ -41,13 +46,23 @@ namespace BulkiBookWeb.Areas.Identity.Controllers
             }
             return View(login);
         }
-        public IActionResult Register()
+        public IActionResult Register(string? returnUrl = null)
         {
-            return View();
+            var model = new RegisterVM
+            {
+                RoleList = new List<SelectListItem>
+                {
+                    new SelectListItem{Text = SD.RoleCustomer, Value = SD.RoleCustomer},
+                    new SelectListItem{Text = SD.RoleAdmin, Value = SD.RoleAdmin},
+                    new SelectListItem{Text = SD.RoleEmployee, Value = SD.RoleEmployee}
+                }
+            };
+            ViewData["ReturnUrl"] = returnUrl;
+            return View(model);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterVM register)
+        public async Task<IActionResult> Register(RegisterVM register, string? returnUrl = null)
         {
             if (!await _roleManager.RoleExistsAsync(SD.RoleCustomer))
             {
@@ -71,7 +86,20 @@ namespace BulkiBookWeb.Areas.Identity.Controllers
                 var result = await _userManager.CreateAsync(user, register.Password);
                 if (result.Succeeded)
                 {
+                    if (!string.IsNullOrEmpty(register.Role))
+                    {
+                        await _userManager.AddToRoleAsync(user, register.Role);
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, SD.RoleCustomer);
+                    }
                     await _signInManager.SignInAsync(user, isPersistent: false);
+
+                    if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                    {
+                        return Redirect(returnUrl);
+                    }
                     return RedirectToAction("Index", "Home", new {area = "Customer"});
                 }
                 foreach(var err in result.Errors)

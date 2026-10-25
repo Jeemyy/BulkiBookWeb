@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace BulkiBookWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
+
+    [Authorize(Roles = SD.RoleAdmin)]
+
     public class CategoryController : Controller
     {
         private readonly ICategoryServices _categoryService;
