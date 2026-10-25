@@ -21,12 +21,14 @@ namespace BulkiBookWeb.Areas.Admin.Controllers
             _webHostEnvironment = webHost;
             _fileServices = fileServices;
         }
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var products = await _productServices.GetAllProductsAsync();
             return View(products);
         }
 
+        [Authorize(Roles ="Admin,Employee")]
         public async Task<IActionResult> Upsert(int? id)
         {
             var categories = await _categoryServices.GetAllCategoriesAsync();

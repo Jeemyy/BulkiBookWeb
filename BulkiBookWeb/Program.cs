@@ -28,13 +28,13 @@ namespace BulkiBookWeb
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            //builder.Services.ConfigureApplicationCookie(options =>
-            //{
-            //    options.LoginPath           = "/Identity/Account/Login";
-            //    options.LogoutPath          = "/identity/account/logout";
-            //    options.AccessDeniedPath    = "/identity/account/accessDeny";
-            //    options.ExpireTimeSpan      = TimeSpan.FromDays(30);
-            //});
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Identity/Account/Login";
+                options.LogoutPath = "/identity/account/logout";
+                options.AccessDeniedPath = "/identity/account/accessDeny";
+                options.ExpireTimeSpan = TimeSpan.FromDays(30);
+            });
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             {

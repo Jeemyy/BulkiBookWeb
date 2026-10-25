@@ -17,7 +17,7 @@
 					<p class="text-secondary">Your Book Store &amp; Library</p>
 				</div>
 
-				<form method="post" asp-action="Register">
+				<form method="post" asp-action="Register" asp-route-returnUrl="@ViewData["ReturnUrl"]">
 					<div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 					<div class="row g-3">
 
@@ -96,7 +96,7 @@
 							<span asp-validation-for="PostalCode" class="text-danger"></span>
 
 						</div>
-						@* <div class="col-md-4 mb-3">
+						<div class="col-md-4 mb-3">
 							<label asp-for="Role" class="form-label">Postal Code</label>
 							<select asp-for="Role" asp-items="@Model.RoleList"
 									class="form-select">
@@ -104,7 +104,7 @@
 							</select>
 							<span asp-validation-for="Role" class="text-danger"></span>
 
-						</div> *@
+						</div>
 					</div>
 
 					<button type="submit" class="btn btn-auth w-100 mt-4">
@@ -113,7 +113,7 @@
 
 					<p class="text-center text-secondary mt-4 mb-0">
 						Already have an account?
-						<a asp-action="Login" class="auth-link fw-semibold">Login</a>
+						<a asp-action="Login" asp-route-returnUrl="@ViewData["ReturnUrl"]" class="auth-link fw-semibold">Login</a>
 					</p>
 				</form>
 
