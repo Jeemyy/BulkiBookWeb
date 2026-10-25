@@ -1,0 +1,137 @@
+﻿<input type="checkbox" id="sidebar-toggle" class="sidebar-checkbox">
+
+<label for="sidebar-toggle" class="sidebar-overlay"></label>
+
+<!-- Customer Sidebar -->
+<aside class="customer-sidebar">
+
+	<div class="customer-sidebar-header">
+		<a href="/" class="customer-brand">
+			<span class="customer-brand-icon">
+				<i class="bi bi-book-half"></i>
+			</span>
+
+			<span>Bulki<span class="brand-highlight">Book</span></span>
+		</a>
+
+		<label for="sidebar-toggle" class="sidebar-close">
+			<i class="bi bi-x-lg"></i>
+		</label>
+	</div>
+
+	<div class="sidebar-welcome">
+		<div class="welcome-avatar">
+			<i class="bi bi-person"></i>
+		</div>
+
+		<div class="welcome-info">
+			<span>Welcome back,</span>
+			<strong>Book Lover!</strong>
+		</div>
+	</div>
+
+	<nav class="customer-nav">
+
+		<span class="customer-nav-heading">DISCOVER</span>
+
+		<a href="/" class="customer-nav-link active">
+			<i class="bi bi-house-door"></i>
+			<span>Home</span>
+		</a>
+
+		<a href="/Home/Index#books" class="customer-nav-link">
+			<i class="bi bi-book"></i>
+			<span>Browse Books</span>
+		</a>
+
+		<a asp-area="Admin" asp-controller="Product" asp-action="Index" class="customer-nav-link">
+			<i class="bi bi-bag"></i>
+			<span>Products</span>
+		</a>
+
+		<a asp-area="Admin" asp-controller="Category" asp-action="Index" class="customer-nav-link">
+			<i class="bi bi-grid"></i>
+			<span>Categories</span>
+		</a>
+		<span class="customer-nav-heading">MY ACCOUNT</span>
+
+		<a href="/Order/Index" class="customer-nav-link">
+			<i class="bi bi-bag-check"></i>
+			<span>My Orders</span>
+		</a>
+
+		<a href="/Identity/Account/Manage" class="customer-nav-link">
+			<i class="bi bi-person-circle"></i>
+			<span>My Profile</span>
+		</a>
+
+		<a href="/Identity/Account/Manage/Email" class="customer-nav-link">
+			<i class="bi bi-gear"></i>
+			<span>Account Settings</span>
+		</a>
+
+		<span class="customer-nav-heading">SUPPORT</span>
+
+		<a href="/Home/Privacy" class="customer-nav-link">
+			<i class="bi bi-question-circle"></i>
+			<span>Help & Support</span>
+		</a>
+
+	</nav>
+
+	<div class="sidebar-promo">
+		<div class="promo-icon">
+			<i class="bi bi-stars"></i>
+		</div>
+
+		<h6>Discover Your Next Read</h6>
+		<p>Every book opens a new world of possibilities.</p>
+
+		<a href="/Home/Index#books" class="promo-link">
+			Explore Books <i class="bi bi-arrow-right"></i>
+		</a>
+	</div>
+
+	<div class="customer-sidebar-footer">
+		<form method="post" asp-area="Identity" asp-controller="Account" asp-action="Logout">
+			<button type="submit" class="customer-nav-link logout-link">
+				<i class="bi bi-box-arrow-left"></i>
+				<span>Logout</span>
+			</button>
+		</form>
+
+		<div class="sidebar-footer-note">
+			<i class="bi bi-heart-fill"></i>
+			Made for book lovers
+		</div>
+	</div>
+
+</aside>
+
+<!-- Main Page -->
+<div class="customer-main">
+
+@* <header class="customer-topbar">
+            <label for="sidebar-toggle" class="sidebar-open">
+                <i class="bi bi-list"></i>
+            </label>
+
+            <div class="topbar-page-info">
+                <span class="topbar-eyebrow">YOUR PERSONAL LIBRARY</span>
+                <h5>Discover something wonderful.</h5>
+            </div>
+
+            <div class="topbar-actions">
+                <a href="/Home/Index#books" class="topbar-browse">
+                    <i class="bi bi-search"></i>
+                    <span>Explore Books</span>
+                </a>
+
+                <a href="/Identity/Account/Manage"
+                   class="topbar-profile"
+                   aria-label="My profile">
+                    <i class="bi bi-person"></i>
+                </a>
+            </div>
+        </header>
+        *@
