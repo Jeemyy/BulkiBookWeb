@@ -1,7 +1,8 @@
-﻿@model Product
+﻿@model ShoppingCart
 <section class="details-page py-5">
 	<div class="container">
-
+		<form method="post" asp-action="Details">
+			<input asp-for="ProductId" hidden/>
 		<!-- Product Header -->
 		<div class="details-header">
 			<div class="row align-items-center g-3">
@@ -9,12 +10,12 @@
 					<span class="details-eyebrow">BOOK DETAILS</span>
 
 					<h1 class="details-title mt-2">
-						@Model.Title 
+						@Model.Product.Title 
 					</h1>
 
 					<p class="details-author mb-0">
 						<i class="bi bi-person me-2"></i>
-						@Model.Author
+						@Model.Product.Author
 					</p>
 				</div>
 
@@ -26,7 +27,7 @@
 						</span>
 
 						<span class="details-badge details-badge-green">
-							Programming
+							@* @Model.Product.CategoryId *@
 						</span>
 					</div>
 				</div>
@@ -43,18 +44,18 @@
 
 						<div class="isbn-box mb-4">
 							<span class="info-label">ISBN</span>
-							<span class="info-value">@Model.ISBN</span>
+							<span class="info-value">@Model.Product.ISBN</span>
 						</div>
 
 						<div class="price-heading">
 							<div>
 								<span class="info-label">Original price</span>
-								<div class="original-price">@Model.Price.ToString("c")</div>
+								<div class="original-price">@Model.Product.Price.ToString("c")</div>
 							</div>
 
 							<div class="price-highlight">
 								<span class="info-label">Starting at</span>
-								<strong>@Model.ListPrice.ToString("c")</strong>
+								<strong>@Model.Product.ListPrice.ToString("c")</strong>
 							</div>
 						</div>
 
@@ -78,9 +79,9 @@
 								<tbody>
 									<tr>
 										<th>Price</th>
-										<td>@Model.Price.ToString("c")</td>
-										<td>@Model.Price50.ToString("c")</td>
-										<td>@Model.Price100.ToString("c")</td>
+										<td>@Model.Product.Price.ToString("c")</td>
+										<td>@Model.Product.Price50.ToString("c")</td>
+										<td>@Model.Product.Price100.ToString("c")</td>
 									</tr>
 								</tbody>
 							</table>
@@ -91,7 +92,7 @@
 							<h5 class="content-heading">About this book</h5>
 
 							<p>
-								@Html.Raw(Model.Description)
+								@Html.Raw(Model.Product.Description)
 							</p>
 						</div>
 
@@ -103,13 +104,9 @@
 
 							<div class="quantity-control">
 								<input type="number"
+										asp-for="Count"
 									   id="quantity"
-									   name="quantity"
-									   class="form-control"
-									   value="1"
-									   min="1"
-									   max="100"
-									   step="1" />
+									   class="form-control"/>
 
 								<span class="quantity-hint">
 									<i class="bi bi-info-circle me-1"></i>
@@ -126,7 +123,7 @@
 					<div class="book-preview">
 						
 						<div class="book-cover">
-							@if (string.IsNullOrEmpty(Model.ImageUrl))
+							@if (string.IsNullOrEmpty(Model.Product.ImageUrl))
 							{
 								<i class="bi bi-journal-bookmark"></i>
 								<span>THE ART OF</span>
@@ -140,7 +137,7 @@
 								<span class="preview-label">
 									@* <i class="bi bi-book me-1"></i> *@
 									Book Cover
-								<img src="@Model.ImageUrl" alt="Book Cover" />
+								<img src="@Model.Product.ImageUrl" alt="Book Cover" />
 								</span>
 							}
 						</div>
@@ -162,12 +159,12 @@
 					Back to Home
 				</a>
 
-				<button type="button" class="btn btn-add-cart">
+				<button type="submit" class="btn btn-add-cart">
 					<i class="bi bi-cart-plus me-2"></i>
 					Add to Cart
 				</button>
 			</div>
 		</div>
-
+		</form>
 	</div>
 </section>

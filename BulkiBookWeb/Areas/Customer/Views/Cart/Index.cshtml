@@ -1,0 +1,259 @@
+﻿@model ShoppingCartVM
+@{
+	var itemCount = Model.ShoppingCartList.Count();
+}
+<div class="cart-page">
+
+	<form action="/" method="post">
+		<!-- Page Header -->
+		<section class="cart-welcome">
+			<div>
+				<span class="cart-eyebrow">
+					<i class="bi bi-bag-heart-fill me-2"></i>
+					YOUR SHOPPING BAG
+				</span>
+				<h2>Shopping Cart</h2>
+				<p>Review your books and get ready for checkout.</p>
+			</div>
+
+			<a asp-action="Index" asp-controller="Home" class="continue-shopping">
+				<i class="bi bi-arrow-left me-2"></i>
+				Continue Shopping
+			</a>
+		</section>
+
+		<div class="cart-layout">
+			@if (itemCount == 0)
+			{
+				<div class="text-center py-5">
+					<i class="bi bi-cart-x display-4 text-secondary"></i>
+					<p class="text-secondary mt-3 mb-0">Your Cart Is Empty</p>
+				</div>
+			}
+			else
+			{
+				<section class="cart-items-panel">
+
+					<div class="cart-panel-header">
+						<div>
+							<h5>Your Items</h5>
+							<p>You have <strong>@itemCount items</strong> in your cart</p>
+						</div>
+						<i class="bi bi-cart3 cart-heading-icon"></i>
+					</div>
+					@foreach (var items in Model.ShoppingCartList)
+					{
+						<!-- Cart Items -->
+						<article class="cart-item">
+							<div class="book-cover">
+								@if (!string.IsNullOrEmpty(items.Product.ImageUrl))
+								{
+									<img src="@items.Product.ImageUrl" class="w-100 h-100" style="object-fit:cover;"
+										 alt="Clean Code book cover">
+								}
+								else
+								{
+									<img src="https://placehold.co.56x72" class="w-100 h-100" style="object-fit:cover;" />
+								}
+							</div>
+
+							<div class="cart-item-details">
+								<h6>@items.Product.Title</h6>
+								<p class="book-author">@items.Product.Author</p>
+
+								<div class="cart-item-bottom">
+									<div class="d-flex align-items-center gap-2">
+										<div class="input-group" style="width: 130px;">
+											<a asp-action="Minus" asp-route-cartId="@items.Id" class="btn btn-outline-secondary btn-sm px-2">
+												<i class="bi bi-dash"></i>
+											</a>
+											<input type="number" value="@items.Count" min="1"
+											class="form-control form-control-sm text-center fw-bold"
+											style="min-width: 52px;" onchange="updateCart(@items.Id, this.value)"/>
+											<a asp-action="Plus" asp-route-cartId="@items.Id" class="btn btn-outline-success btn-sm px-2">
+												<i class="bi bi-plus-lg"></i>
+											</a>
+										</div>
+									</div>
+
+									<a asp-action="Remove" asp-route-cartId="@items.Id" class="remove-item text-decoration-none text-danger">
+										<i class="bi bi-trash3 me-1"></i>
+										Remove
+									</a>
+								</div>
+							</div>
+
+							<div class="cart-item-price">
+								<strong>@((items.Price*items.Count).ToString("c"))</strong>
+								<span>each</span>
+							</div>
+						</article>
+
+					}
+
+
+					<div class="cart-bottom-link">
+						<i class="bi bi-shield-check me-2"></i>
+						Secure shopping experience
+					</div>
+
+				</section>
+
+			}
+			<!-- Cart Items -->
+			<!-- Order Summary -->
+			<aside class="order-summary">
+
+				<div class="summary-header">
+					<div>
+						<span class="summary-eyebrow text-secondary">YOUR ORDER</span>
+						<div class="row g-2 mb-2">
+							<span class="summary-eyebrow fs-6"> <i class="bi bi-file-person"></i>Name & Phone </span>
+							<div class="col-6">
+								<input asp-for="OrderHeader.Name" class="form-control" placeholder="Full Name..."/>
+								<span asp-validation-for="OrderHeader.Name" class="text-danger"></span>
+							</div>
+							<div class="col-6">
+								<input asp-for="OrderHeader.PhoneNumber" class="form-control" placeholder="Phone Number..."/>
+								<span asp-validation-for="OrderHeader.PhoneNumber" class="text-danger"></span>
+							</div>
+						</div>
+					
+						<div class="row g-2">
+							<span class="summary-eyebrow fs-6"><i class="bi bi-geo-alt"></i>Shopping Address</span>
+
+							<div class="col-12">
+								<input asp-for="OrderHeader.StreetAddress" class="form-control" placeholder="Street Address..."/>
+								<span asp-validation-for="OrderHeader.StreetAddress" class="text-danger"></span>
+							</div>
+							<div class="col-5">
+								<input asp-for="OrderHeader.State" class="form-control" placeholder="Street Address..."/>
+								<span asp-validation-for="OrderHeader.State" class="text-danger"></span>
+							</div>
+							<div class="col-3">
+								<input asp-for="OrderHeader.City" class="form-control" placeholder="City..."/>
+								<span asp-validation-for="OrderHeader.City" class="text-danger"></span>
+							</div>
+							<div class="col-4">
+								<input asp-for="OrderHeader.PostalCode" class="form-control" placeholder="State..."/>
+								<span asp-validation-for="OrderHeader.PostalCode" class="text-danger"></span>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+						<h5>Order Summary</h5>
+
+				<div class="summary-row">
+					<span>Subtotal (3 items)</span>
+					<strong>@Model.OrderHeader.OrderTotal.ToString("c")</strong>
+				</div>
+
+				<div class="summary-row">
+					<span>Shipping</span>
+					<strong class="free-shipping">FREE</strong>
+				</div>
+
+				<div class="shipping-note">
+					<i class="bi bi-truck me-2"></i>
+					Your order qualifies for free shipping!
+				</div>
+
+				<!-- Promo Code -->
+				<div class="promo-section">
+					<label for="promoCode">Promo Code</label>
+
+					<div class="promo-input-group">
+						<input type="text"
+							   id="promoCode"
+							   placeholder="Enter promo code">
+						<button type="button">Apply</button>
+					</div>
+				</div>
+
+				<div class="summary-divider"></div>
+
+				<div class="summary-total">
+					<span>Total</span>
+					<strong>@Model.OrderHeader.OrderTotal.ToString("c")</strong>
+				</div>
+
+				<p class="tax-note">
+					Taxes and any additional fees are calculated at checkout.
+				</p>
+
+				<a href="Checkout.html" class="checkout-btn">
+					Proceed to Checkout
+					<i class="bi bi-arrow-right"></i>
+				</a>
+
+				<div class="payment-security">
+					<i class="bi bi-lock-fill"></i>
+					<span>Secure checkout</span>
+					<span class="security-dot">•</span>
+					<span>Protected payment</span>
+				</div>
+
+				<div class="accepted-payments">
+					<span>PAYMENT OPTIONS</span>
+					<div>
+						<i class="bi bi-credit-card-2-front"></i>
+						<i class="bi bi-wallet2"></i>
+						<i class="bi bi-cash-coin"></i>
+					</div>
+				</div>
+
+			</aside>
+
+		</div>
+
+		<!-- Shopping Benefits -->
+		<section class="cart-benefits">
+			<div class="benefit-item">
+				<div class="benefit-icon">
+					<i class="bi bi-truck"></i>
+				</div>
+				<div>
+					<h6>Free Shipping</h6>
+					<p>On eligible orders</p>
+				</div>
+			</div>
+
+			<div class="benefit-item">
+				<div class="benefit-icon">
+					<i class="bi bi-shield-check"></i>
+				</div>
+				<div>
+					<h6>Secure Checkout</h6>
+					<p>Your information stays protected</p>
+				</div>
+			</div>
+
+			<div class="benefit-item">
+				<div class="benefit-icon">
+					<i class="bi bi-book"></i>
+				</div>
+				<div>
+					<h6>Books Worth Reading</h6>
+					<p>Build your next great reading list</p>
+				</div>
+			</div>
+		</section>
+	</form>
+
+</div>
+
+@section Scripts{
+	<script>
+		function updateCart(cartId, count){
+			fetch("/Customer/Cart/UpdateCart",{
+				method: 'Post',
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+				body: 'cartId='+cartId+'&count='+count
+			}).then(response => {
+				if(response.ok) window.location.reload();
+			});
+		}
+	</script>
+	<partial name="_ValidationScriptsPartial"/>
+}
