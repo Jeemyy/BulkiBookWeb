@@ -1,0 +1,73 @@
+﻿@{
+    ViewData["Title"] = "Order Confirmation";
+}
+
+<div class="confirmation-page">
+    <div class="confirmation-card">
+
+        <!-- Success Icon -->
+        <div class="success-icon">
+            <i class="bi bi-check-lg"></i>
+        </div>
+
+        <!-- Confirmation Message -->
+        <span class="confirmation-eyebrow">ORDER COMPLETED</span>
+
+        <h1>Thank You for Your Order!</h1>
+
+        <p class="confirmation-message">
+            Your order has been successfully placed.
+            We're getting your books ready for delivery.
+        </p>
+
+        <!-- Order Information -->
+        <div class="confirmation-details">
+            <div class="confirmation-detail">
+                <span>Order Number</span>
+                <strong>#123456</strong>
+            </div>
+
+            <div class="confirmation-detail">
+                <span>Order Date</span>
+                <strong>@DateTime.Now.ToString("dd MMM yyyy")</strong>
+            </div>
+
+            <div class="confirmation-detail">
+                <span>Payment Status</span>
+                <strong class="payment-status">
+                    <i class="bi bi-clock-history"></i>
+                    Pending
+                </strong>
+            </div>
+        </div>
+
+        <!-- Delivery Message -->
+        <div class="delivery-message">
+            <i class="bi bi-truck"></i>
+            <div>
+                <strong>What's Next?</strong>
+                <p>
+                    We'll process your order and prepare your books.
+                    Thank you for shopping with BulkiBook!
+                </p>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="confirmation-actions">
+            <a asp-area="Customer"
+               asp-controller="Home"
+               asp-action="Index"
+               class="btn btn-continue">
+                <i class="bi bi-shop me-2"></i>
+                Continue Shopping
+            </a>
+        </div>
+
+        <div class="confirmation-footer">
+            <i class="bi bi-shield-check me-1"></i>
+            Thank you for choosing BulkiBook.
+        </div>
+
+    </div>
+</div>
