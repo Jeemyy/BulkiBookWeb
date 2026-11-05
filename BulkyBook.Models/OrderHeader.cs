@@ -33,5 +33,7 @@ namespace BulkyBook.Models
         public string StreetAddress{ get; set; }
         [Required]
         public string PostalCode { get; set; }
+
+        public IEnumerable<OrderDetails> OrderDetails { get; set; }
     }
 }
