@@ -1,0 +1,302 @@
+﻿@model OrderHeader
+@{
+	var isCustomer = User.IsInRole(SD.RoleCustomer);
+	var containerClass = isCustomer ? "container my-4 pt-3" : "container-fluid py-4";
+}
+<div class="@containerClass">
+
+	<!-- Page Header -->
+	<div class="order-page-header">
+		<div>
+			<span class="page-eyebrow">ORDER MANAGEMENT</span>
+			<h2>Order Details</h2>
+			<p>View customer information and manage this order.</p>
+		</div>
+
+		<div>
+
+		<a asp-action="Index" class="btn-back">
+			<i class="bi bi-arrow-left"></i>
+			Back to Orders
+		</a>
+			<a asp-action="DeleteOrder" asp-route-id="@Model.Id" class="btn-back bg-danger text-white">
+				<i class="bi bi-trash3"></i>
+			</a>
+
+		</div>
+
+	</div>
+
+	<form method="post">
+		<!-- Order Information -->
+		<div class="row g-4">
+
+			<!-- Customer & Shipping Information -->
+			<input type="hidden" asp-for="Id" />
+			<div class="col-lg-6">
+				<div class="order-info-card">
+
+					<div class="card-section-header">
+						<div class="section-icon">
+							<i class="bi bi-person-lines-fill"></i>
+						</div>
+						<div>
+							<h5> Information</h5>
+							<p>Customer contact and delivery details</p>
+						</div>
+					</div>
+
+					<div class="order-info-grid">
+
+						<div class="info-item">
+							<label>Customer Name</label>
+							@if (isCustomer)
+								{
+									<input asp-for="Name" disabled class="form-control" form-control-sm />
+								}
+								else
+								{
+									<input asp-for="Name" class="form-control" form-control-sm />
+									<span asp-validation-for="Name" class="text-danger"></span>
+								}
+							</div>
+
+						<div class="info-item">
+							<label>Email Address</label>
+							<div class="info-value">
+									@if (isCustomer)
+									{
+										<input asp-for="@Model.ApplicationUser.Email" class="form-control" form-control-sm disabled/>
+									}
+									else
+									{
+										<input asp-for="@Model.ApplicationUser.Email" class="form-control" form-control-sm />
+										<span class="text-danger" asp-validation-for="ApplicationUser.Email"></span>				
+									}
+								</div>
+						</div>
+
+						<div class="info-item">
+							<label>Phone Number</label>
+							<div class="info-value">
+								@if (isCustomer)
+									{
+										<input asp-for="@Model.PhoneNumber" class="form-control" form-control-sm disabled/>
+									}
+									else
+									{
+										<input asp-for="@Model.PhoneNumber" class="form-control" form-control-sm />
+										<span class="text-danger" asp-validation-for="@Model.PhoneNumber"></span>				
+									}
+								</div>
+						</div>
+
+						<div class="info-item">
+							<label>Order Date</label>
+							<div class="info-value">
+									@if (isCustomer)
+									{
+										<input asp-for="@Model.OrderDate" class="form-control" form-control-sm disabled/>
+									}
+									else
+									{
+										<input asp-for="@Model.OrderDate" class="form-control" form-control-sm />
+										<span class="text-danger" asp-validation-for="@Model.OrderDate"></span>				
+									}
+								</div>
+						</div>
+
+						<div class="info-item full-width">
+							<label>Street Address</label>
+							<div class="info-value">
+								@if (isCustomer)
+									{
+										<input asp-for="@Model.StreetAddress" class="form-control" form-control-sm disabled/>
+									}
+									else
+									{
+										<input asp-for="@Model.StreetAddress" class="form-control" form-control-sm />
+										<span class="text-danger" asp-validation-for="@Model.StreetAddress"></span>				
+									}
+								</div>
+						</div>
+
+						<div class="info-item">
+							<label>City</label>
+							@if (isCustomer)
+								{
+									<input asp-for="@Model.City" class="form-control" form-control-sm disabled/>
+								}
+								else
+								{
+									<input asp-for="@Model.City" class="form-control" form-control-sm />
+									<span class="text-danger" asp-validation-for="@Model.City"></span>				
+								}
+							</div>
+
+						<div class="info-item">
+							<label>State</label>
+							@if (isCustomer)
+								{
+									<input asp-for="@Model.State" class="form-control" form-control-sm disabled/>
+								}
+								else
+								{
+									<input asp-for="@Model.State" class="form-control" form-control-sm />
+									<span class="text-danger" asp-validation-for="@Model.State"></span>				
+								}
+							</div>
+
+						<div class="info-item">
+							<label>Postal Code</label>
+							@if (isCustomer)
+								{
+									<input asp-for="@Model.PostalCode" class="form-control" form-control-sm disabled/>
+								}
+								else
+								{
+									<input asp-for="@Model.PostalCode" class="form-control" form-control-sm />
+									<span class="text-danger" asp-validation-for="@Model.PostalCode"></span>				
+								}
+							</div>
+
+					</div>
+
+					<div class="card-divider"></div>
+
+					<!-- Shipping Information -->
+					<div class="card-section-header shipping-header">
+						<div class="section-icon">
+							<i class="bi bi-truck"></i>
+						</div>
+						<div>
+							<h5>Shipping Information</h5>
+							<p>Carrier and shipment tracking details</p>
+						</div>
+					</div>
+
+					<div class="order-info-grid">
+
+						@if (Model.OrderStatus != SD.StatusPending &&
+	 Model.OrderStatus != SD.StatusApproved)
+						{
+							<div class="info-item">
+								<label asp-for="Carrier">Carrier</label>
+								<input asp-for="Carrier"
+									   class="form-control form-control-sm" />
+							</div>
+
+							<div class="info-item">
+								<label asp-for="TrackingNumber">Tracking Number</label>
+								<input asp-for="TrackingNumber"
+									   class="form-control form-control-sm" />
+							</div>
+						}
+						<div class="info-item full-width">
+							<label>Shipping Date</label>
+							<div class="info-value">
+								<input type="text" value="@Model.OrderShipping.ToShortDateString()" class="form-control" form-control-sm />
+							</div>
+						</div>
+
+					</div>
+
+					<button type="submit" asp-action="UpdateOrder" class="btn-action btn btn-secondary my-5">
+						<i class="bi bi-pen"></i>
+						Update Order
+					</button>
+
+				</div>
+			</div>
+
+			<!-- Order Summary -->
+			<div class="col-lg-6">
+				<div class="order-summary-card">
+
+					<div class="card-section-header">
+						<div class="section-icon">
+							<i class="bi bi-receipt"></i>
+						</div>
+						<div>
+							<h5>Order Summary</h5>
+							<p>Order #ORD-2026-00125</p>
+						</div>
+					</div>
+
+					<!-- Order Status -->
+					<div class="order-status-box">
+						<span>Current Order Status</span>
+						<span class="status-badge status-pending">
+							<i class="bi bi-clock-history"></i>
+							@Model.OrderStatus
+						</span>
+					</div>
+
+					<!-- Product List -->
+					<div class="product-list-header">
+						<span>PRODUCT</span>
+						<span>PRICE</span>
+					</div>
+
+
+					@foreach (var order in Model.OrderDetails)
+					{
+						<div class="order-product">
+							<img src="@order.Product.ImageUrl" class="product-image" />
+
+							<div class="product-details">
+								<h6>@order.Product.Title</h6>
+								<span>@order.Product.Author</span>
+								<small>Quantity: @order.Count</small>
+							</div>
+
+							<strong>@order.Price.ToString("c")</strong>
+						</div>
+					}
+					<div class="price-summary">
+						<div>
+							<span>Subtotal</span>
+							<strong>@Model.OrderTotal.ToString("c")</strong>
+						</div>
+
+						<div>
+							<span>Shipping</span>
+							<strong>FREE</strong>
+						</div>
+
+						<div class="total-price">
+							<span>Total Amount</span>
+							<strong>@Model.OrderTotal.ToString("c")</strong>
+						</div>
+					</div>
+					<!-- Price Summary -->
+					<!-- Order Actions -->
+					<div class="order-actions">
+						@if (Model.OrderStatus == SD.StatusApproved)
+						{
+							<button type="submit" asp-action="UpdateOrderStatus" asp-route-status="@SD.StatusInProcess" class="btn-action btn-processing">
+								<i class="bi bi-play-circle"></i>
+								Start Processing
+							</button>
+						}
+						@if (Model.OrderStatus == SD.StatusInProcess)
+						{
+							<button type="submit" asp-action="UpdateOrderStatus" asp-route-status="@SD.StatusShipped" class="btn-action btn-ship">
+								<i class="bi bi-truck"></i>
+								Ship Order
+							</button>
+						}
+						@if (Model.OrderStatus != SD.StatusRefunded && Model.OrderStatus != SD.StatusCancelled)
+						{
+							<button type="submit" asp-action="UpdateOrderStatus" asp-route-status="@SD.StatusCancelled" class="btn-action btn-cancel text-decoration-none">
+								<i class="bi bi-x-circle"></i>
+								Cancel Order
+							</button>
+						}
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</form>
+</div>
