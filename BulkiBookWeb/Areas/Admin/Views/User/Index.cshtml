@@ -1,0 +1,45 @@
+﻿<div class="container-fluid mt-5 mb-5">
+    <div class="card border shadow-sm overflow-hidden">
+
+        <!-- Card Header -->
+        <div class="card-header text-white py-3 px-4"
+             style="background: linear-gradient(to right, #065f46, #282828, #191414);">
+
+            <div>
+                <h5 class="mb-0 fw-bold">
+                    <i class="bi bi-grid me-2"></i>
+                    <i class="bi bi-grid me-2"></i>
+                    Users
+                </h5>
+
+                <p class="mb-0 small" style="color: #1DB954;">
+                    User Management Dashboard
+                </p>
+            </div>
+            <a class="btn btn-sm btn-outline-light fw-semibold d-inline-flex align-items-center gap-1">
+                <i class="bi bi-plus-lg"></i>
+                New User
+            </a>
+        </div>
+
+        <!-- Table -->
+        <div class="table-responsive">
+            <table class="table table-styled mb-0" id="tblData">
+
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Role</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+    </div>
+</div>
+@section Scripts {
+    <script src="~/js/user.js" asp-append-version="true"></script>
+}

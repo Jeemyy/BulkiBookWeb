@@ -52,7 +52,7 @@ namespace BulkiBookWeb.Areas.Customer.Controllers
             cart.ApplicationUserId = userId;
             await _shoppingCartServices.AddToCartAsync(cart);
             TempData["success"] = "Item add to cart.";
-            return RedirectToAction("Details", new { ProductId = cart.ProductId });
+            return RedirectToAction("index");
         }
         public IActionResult Privacy()
         {

@@ -1,5 +1,6 @@
 ﻿using BulkiBook.Business.Interfaces;
 using BulkiBook.DataAccess.Data;
+using BulkiBook.Utility;
 using BulkyBook.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -36,9 +37,9 @@ namespace BulkiBook.Business.Services
             {
                 query = query.Where(q => q.ApplicationUserId == userId);
             }
-            if (!string.IsNullOrEmpty(status))
+            if (!string.IsNullOrEmpty(status) && status.ToLower() != "all")
             {
-                query = query.Where(q => q.OrderStatus == status);
+                query = query.Where(q => q.OrderStatus.ToLower() == status.ToLower());
             }
             return await query.ToListAsync();
         }
@@ -57,6 +58,40 @@ namespace BulkiBook.Business.Services
                         .ThenInclude(o => o.Product);
             }
             return await query.FirstOrDefaultAsync(q => q.Id == orderId);
+        }
+        public async Task UpdateOrderAsync(OrderHeader orderHeader) 
+        {
+            _db.OrderHeaders.Update(orderHeader);
+            await _db.SaveChangesAsync();
+        }
+        public async Task RemoveOrderAsync(int id)
+        {
+            var order = await GetOrderByIdAsync(id);
+            _db.OrderHeaders.Remove(order);
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task UpdateOrderStatusAsync(int id, string orderStatus, string? carrier = null, string? trackingNumber = null)
+        {
+            var order = await _db.OrderHeaders.FindAsync(id);
+            if (order is null)
+            {
+                throw new KeyNotFoundException("Order is not found!");
+            }
+            order.OrderStatus = orderStatus;
+            if (orderStatus == SD.StatusShipped)
+            {
+                order.OrderShipping = DateTime.UtcNow;
+                if (!string.IsNullOrEmpty(carrier))
+                {
+                    order.Carrier = carrier;
+                }
+                if (!string.IsNullOrEmpty(trackingNumber))
+                {
+                    order.TrackingNumber = trackingNumber;
+                }
+            }
+            await _db.SaveChangesAsync();
         }
     }
 }
