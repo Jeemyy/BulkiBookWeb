@@ -78,6 +78,7 @@ namespace BulkiBookWeb.Areas.Customer.Controllers
             shoppingCartVM.OrderHeader.OrderDate = DateTime.UtcNow;
             shoppingCartVM.OrderHeader.ApplicationUserId = userId;
 
+
             foreach (var carts in shoppingCartVM.ShoppingCartList)
             {
                 shoppingCartVM.OrderHeader.OrderTotal += (carts.Price * carts.Count);
@@ -95,7 +96,7 @@ namespace BulkiBookWeb.Areas.Customer.Controllers
             await _orderServices.CreateOrderAsync(shoppingCartVM.OrderHeader);
 
 
-            return RedirectToAction("OrderConfirmation", new { id = shoppingCartVM.OrderHeader.Id });
+            return RedirectToAction(nameof(OrderConfirmation), new { id = shoppingCartVM.OrderHeader.Id });
         }
         public async Task<IActionResult> OrderConfirmation(int id)
         {
