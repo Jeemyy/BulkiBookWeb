@@ -1,7 +1,7 @@
 ﻿new DataTable('#tblData', {
     ajax: '/admin/product/getall',
     columns: [
-        { data: 'title', width: "25%" },
+        { data: 'title', width: "15%" },
         { data: 'isbn', width: "20%" },
         { data: 'author', width: "15%" },
         {

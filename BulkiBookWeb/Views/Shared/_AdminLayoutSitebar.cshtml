@@ -53,16 +53,15 @@
 			<i class="bi bi-grid"></i>
 			<span>Categories</span>
 		</a>
-		<span class="customer-nav-heading">MY ACCOUNT</span>
 
 		<a asp-area="Admin" asp-controller="Order" asp-action="Index" class="customer-nav-link">
 			<i class="bi bi-bag-check"></i>
 			<span>Orders</span>
 		</a>
 
-		<a href="/Identity/Account/Manage" class="customer-nav-link">
-			<i class="bi bi-person-circle"></i>
-			<span>My Profile</span>
+		<a asp-area="Admin" asp-controller="User" asp-action="Index" class="customer-nav-link">
+			<i class="bi bi-people"></i>
+			<span>Users</span>
 		</a>
 
 		<a href="/Identity/Account/Manage/Email" class="customer-nav-link">

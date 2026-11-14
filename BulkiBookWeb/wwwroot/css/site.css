@@ -4538,3 +4538,664 @@ body {
         grid-column: auto;
     }
 }
+
+/* =====================================
+   USER ROLE MANAGEMENT
+===================================== */
+
+.role-management-page {
+    min-height: 100vh;
+    padding: 25px;
+    background: #f5f6f8;
+}
+
+/* Page Header */
+
+.role-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.page-eyebrow {
+    color: #065f46;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.3px;
+}
+
+.role-page-header h2 {
+    margin: 5px 0;
+    color: #191414;
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.role-page-header p {
+    margin: 0;
+    color: #858992;
+    font-size: 12px;
+}
+
+.role-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 15px;
+    border: 1px solid #e1e5e8;
+    border-radius: 7px;
+    background: #fff;
+    color: #34373d;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: .2s;
+}
+
+    .role-back-btn:hover {
+        color: #065f46;
+        border-color: #065f46;
+    }
+
+/* Main Cards */
+
+.role-card {
+    height: auto;
+    padding: 22px;
+    margin-bottom: 20px;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 3px 12px rgba(25, 20, 20, .04);
+}
+
+.role-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.role-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: #e8f5ee;
+    color: #065f46;
+    font-size: 19px;
+}
+
+.role-card-header h5 {
+    margin: 0 0 5px;
+    color: #191414;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.role-card-header p {
+    margin: 0;
+    color: #92969e;
+    font-size: 10px;
+}
+
+/* User Profile */
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 17px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    background: #f6f8f7;
+}
+
+.user-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 55px;
+    height: 55px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #065f46;
+    color: #fff;
+    font-size: 25px;
+}
+
+.user-profile h4 {
+    margin: 0 0 5px;
+    color: #191414;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.user-id {
+    color: #92969e;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .6px;
+}
+
+.user-info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+}
+
+.user-info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+    .user-info-item > span {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #858992;
+        font-size: 11px;
+    }
+
+        .user-info-item > span i {
+            color: #065f46;
+            font-size: 14px;
+        }
+
+    .user-info-item > strong {
+        color: #292c31;
+        font-size: 11px;
+        text-align: right;
+        overflow-wrap: anywhere;
+    }
+
+.current-role-badge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    background: #e8f5ee;
+    color: #065f46 !important;
+}
+
+.account-active {
+    color: #16834d !important;
+}
+
+    .account-active i {
+        font-size: 8px;
+    }
+
+/* Role Assignment */
+
+.assignment-card {
+    border-top: 3px solid #065f46;
+}
+
+.current-role-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 13px;
+    margin-bottom: 20px;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    background: #fafbfc;
+}
+
+    .current-role-info span {
+        color: #858992;
+        font-size: 11px;
+    }
+
+    .current-role-info strong {
+        color: #065f46;
+        font-size: 12px;
+        font-weight: 800;
+    }
+
+.new-role-field label {
+    display: block;
+    margin-bottom: 8px;
+    color: #34373d;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.new-role-field .form-select {
+    min-height: 44px;
+    border: 1px solid #e1e5e8;
+    border-radius: 7px;
+    background-color: #fafbfc;
+    color: #292c31;
+    font-size: 12px;
+    box-shadow: none;
+}
+
+    .new-role-field .form-select:focus {
+        border-color: #065f46;
+        box-shadow: 0 0 0 3px rgba(6, 95, 70, .08);
+    }
+
+.role-warning {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px;
+    margin: 17px 0;
+    border-radius: 8px;
+    background: #fff8e8;
+    color: #a66a00;
+}
+
+    .role-warning i {
+        font-size: 15px;
+    }
+
+    .role-warning p {
+        margin: 0;
+        font-size: 10px;
+        line-height: 1.6;
+    }
+
+.btn-update-role {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    min-height: 44px;
+    border: none;
+    border-radius: 7px;
+    background: linear-gradient(to right, #065f46, #191414);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    transition: .2s;
+    cursor: pointer;
+}
+
+    .btn-update-role:hover {
+        opacity: .9;
+        transform: translateY(-1px);
+    }
+
+/* System Roles */
+
+.system-role-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.system-role-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+    padding: 15px;
+    border: 1px solid #edf0f1;
+    border-radius: 9px;
+}
+
+.system-role-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    border-radius: 9px;
+    font-size: 17px;
+}
+
+.admin-role .system-role-icon {
+    background: #e8f5ee;
+    color: #065f46;
+}
+
+.employee-role .system-role-icon {
+    background: #eaf2fb;
+    color: #2874a6;
+}
+
+.customer-role .system-role-icon {
+    background: #f2edfa;
+    color: #7652a4;
+}
+
+.system-role-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.system-role-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+    .system-role-title h6 {
+        margin: 0;
+        color: #292c31;
+        font-size: 12px;
+        font-weight: 800;
+    }
+
+.role-level {
+    padding: 4px 7px;
+    border-radius: 20px;
+    font-size: 8px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.admin-level {
+    background: #e8f5ee;
+    color: #065f46;
+}
+
+.employee-level {
+    background: #eaf2fb;
+    color: #2874a6;
+}
+
+.customer-level {
+    background: #f2edfa;
+    color: #7652a4;
+}
+
+.system-role-content p {
+    margin: 0;
+    color: #858992;
+    font-size: 10px;
+    line-height: 1.6;
+}
+
+/* Permissions Table */
+
+.permissions-card {
+    overflow: hidden;
+}
+
+.permissions-table {
+    margin: 0;
+    white-space: nowrap;
+}
+
+    .permissions-table thead th {
+        padding: 12px 10px;
+        border-bottom: 1px solid #e9ecef;
+        background: #f8f9fa;
+        color: #92969e;
+        font-size: 9px;
+        font-weight: 800;
+        letter-spacing: .4px;
+    }
+
+    .permissions-table tbody td {
+        padding: 13px 10px;
+        border-bottom: 1px solid #f0f1f2;
+        color: #454950;
+        font-size: 10px;
+        font-weight: 600;
+    }
+
+        .permissions-table tbody td:not(:first-child) {
+            text-align: center;
+        }
+
+.allowed {
+    color: #16834d;
+    font-size: 15px;
+}
+
+.denied {
+    color: #dc6464;
+    font-size: 15px;
+}
+
+.permissions-legend {
+    display: flex;
+    gap: 18px;
+    padding-top: 16px;
+}
+
+    .permissions-legend span {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: #858992;
+        font-size: 10px;
+    }
+
+/* Responsive */
+
+@media (max-width: 768px) {
+    .role-management-page {
+        padding: 15px;
+    }
+
+    .role-page-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .role-card {
+        padding: 17px;
+    }
+}
+
+@media (max-width: 480px) {
+    .user-info-item {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+        .user-info-item > strong {
+            padding-left: 22px;
+            text-align: left;
+        }
+
+    .system-role-title {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+/* =====================================
+   RESET USER PASSWORD
+===================================== */
+
+.reset-password-page {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 35px 15px;
+    background: #f5f6f8;
+}
+
+.reset-password-card {
+    width: 100%;
+    max-width: 440px;
+    padding: 35px;
+    border: 1px solid #e9ecef;
+    border-radius: 14px;
+    background: #fff;
+    text-align: center;
+    box-shadow: 0 5px 25px rgba(25, 20, 20, .05);
+}
+
+/* Header */
+
+.reset-password-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 65px;
+    height: 65px;
+    margin: 0 auto 20px;
+    border-radius: 16px;
+    background: #e8f5ee;
+    color: #065f46;
+    font-size: 28px;
+}
+
+.reset-password-eyebrow {
+    color: #065f46;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.3px;
+}
+
+.reset-password-card h2 {
+    margin: 10px 0;
+    color: #191414;
+    font-size: 23px;
+    font-weight: 800;
+}
+
+.reset-password-description {
+    max-width: 320px;
+    margin: 0 auto 27px;
+    color: #858992;
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+/* Form */
+
+.reset-form-group {
+    margin-bottom: 19px;
+    text-align: left;
+}
+
+    .reset-form-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: #34373d;
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+.reset-input-wrapper {
+    position: relative;
+}
+
+    .reset-input-wrapper > i {
+        position: absolute;
+        top: 50%;
+        left: 13px;
+        transform: translateY(-50%);
+        color: #92969e;
+        font-size: 14px;
+        pointer-events: none;
+    }
+
+    .reset-input-wrapper .form-control {
+        min-height: 45px;
+        padding: 10px 12px 10px 40px;
+        border: 1px solid #e1e5e8;
+        border-radius: 7px;
+        background: #fafbfc;
+        color: #292c31;
+        font-size: 12px;
+        box-shadow: none;
+        transition: .2s ease;
+    }
+
+        .reset-input-wrapper .form-control:focus {
+            border-color: #065f46;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(6, 95, 70, .08);
+        }
+
+        .reset-input-wrapper .form-control[readonly] {
+            background: #f0f2f3;
+            color: #858992;
+            cursor: not-allowed;
+        }
+
+/* Security Note */
+
+.password-security-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    padding: 12px;
+    margin: 5px 0 22px;
+    border-radius: 7px;
+    background: #f0f7f3;
+    color: #065f46;
+    text-align: left;
+    font-size: 10px;
+    line-height: 1.6;
+}
+
+    .password-security-note i {
+        font-size: 14px;
+    }
+
+/* Buttons */
+
+.btn-reset-password {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 45px;
+    border: none;
+    border-radius: 7px;
+    background: linear-gradient(to right, #065f46, #191414);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    transition: .2s ease;
+    cursor: pointer;
+}
+
+    .btn-reset-password:hover {
+        opacity: .9;
+        transform: translateY(-1px);
+    }
+
+.btn-cancel-reset {
+    display: block;
+    margin-top: 15px;
+    color: #858992;
+    font-size: 11px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+    .btn-cancel-reset:hover {
+        color: #065f46;
+    }
+
+/* Footer */
+
+.reset-password-footer {
+    margin-top: 25px;
+    padding-top: 17px;
+    border-top: 1px solid #edf0f1;
+    color: #a0a4aa;
+    font-size: 10px;
+}
+
+@media (max-width: 480px) {
+    .reset-password-card {
+        padding: 25px 20px;
+    }
+
+        .reset-password-card h2 {
+            font-size: 20px;
+        }
+}

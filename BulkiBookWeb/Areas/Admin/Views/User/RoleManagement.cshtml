@@ -1,0 +1,296 @@
+﻿@model RoleManagementVM
+
+<div class="role-management-page">
+
+    <!-- Page Header -->
+    <div class="role-page-header">
+        <div>
+            <span class="page-eyebrow">USER MANAGEMENT</span>
+            <h2>Manage User Role</h2>
+            <p>View user information and manage system access permissions.</p>
+        </div>
+
+        <a asp-action="Index" class="role-back-btn">
+            <i class="bi bi-arrow-left"></i>
+            Back to Users
+        </a>
+    </div>
+
+    <div class="row g-4">
+
+        <!-- Left Column: User & Role Assignment -->
+        <div class="col-lg-5">
+
+            <!-- User Information -->
+            <div class="role-card user-profile-card">
+
+                <div class="role-card-header">
+                    <div class="role-icon">
+                        <i class="bi bi-person-badge"></i>
+                    </div>
+                    <div>
+                        <h5>User Information</h5>
+                        <p>Account details and current access</p>
+                    </div>
+                </div>
+
+                <div class="user-profile">
+                    <div class="user-avatar">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+
+                    <div>
+                        <h4>@Model.ApplicationUser.Name</h4>
+                        <span class="user-id">USER ID: #@Model.ApplicationUser.Id</span>
+                    </div>
+                </div>
+
+                <div class="user-info-list">
+
+                    <div class="user-info-item">
+                        <span><i class="bi bi-envelope"></i> Email Address</span>
+                        <strong>@Model.ApplicationUser.Email</strong>
+                    </div>
+
+                    <div class="user-info-item">
+                        <span><i class="bi bi-telephone"></i> Phone Number</span>
+                        <strong>@Model.ApplicationUser.PhoneNumber</strong>
+                    </div>
+
+                    <div class="user-info-item">
+                        <span><i class="bi bi-shield-lock"></i> Current Role</span>
+                        <strong class="current-role-badge">
+                            @Model.ApplicationUser.Role
+                        </strong>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <!-- Role Assignment -->
+            <div class="role-card assignment-card">
+
+                <div class="role-card-header">
+                    <div class="role-icon">
+                        <i class="bi bi-person-gear"></i>
+                    </div>
+                    <div>
+                        <h5>Assign New Role</h5>
+                        <p>Change this user's system permissions</p>
+                    </div>
+                </div>
+
+                <div class="current-role-info">
+                    <span>Current Role</span>
+                    <strong>@Model.ApplicationUser.Role</strong>
+                </div>
+
+                <form method="post">
+					<input hidden asp-for="@Model.ApplicationUser.Id"/>
+                    <div class="new-role-field">
+                        <label for="newRole">Select New Role</label>
+
+                        <select class="form-select" id="newRole" asp-for="@Model.ApplicationUser.Role" asp-items="@Model.RoleList">
+                            <option value="Choose a role..." selected disabled>
+                                Choose a role...
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="role-warning">
+                        <i class="bi bi-exclamation-triangle"></i>
+                        <p>
+                            Changing this role will update the user's
+                            access permissions throughout the system.
+                        </p>
+                    </div>
+
+                    <button type="submit" class="btn-update-role">
+                        <i class="bi bi-check-circle"></i>
+                        Update User Role
+                    </button>
+
+                </form>
+            </div>
+
+        </div>
+
+        <!-- Right Column: Role Information & Permissions -->
+        <div class="col-lg-7">
+
+            <!-- System Roles -->
+            <div class="role-card">
+
+                <div class="role-card-header">
+                    <div class="role-icon">
+                        <i class="bi bi-people"></i>
+                    </div>
+                    <div>
+                        <h5>System Roles</h5>
+                        <p>Overview of available roles in BulkiBook</p>
+                    </div>
+                </div>
+
+                <div class="system-role-list">
+
+                    <!-- Admin -->
+                    <div class="system-role-item admin-role">
+                        <div class="system-role-icon">
+                            <i class="bi bi-shield-fill-check"></i>
+                        </div>
+
+                        <div class="system-role-content">
+                            <div class="system-role-title">
+                                <h6>Admin</h6>
+                                <span class="role-level admin-level">
+                                    HIGH ACCESS
+                                </span>
+                            </div>
+
+                            <p>
+                                Has administrative access to manage users,
+                                products, categories, orders, and system settings.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Employee -->
+                    <div class="system-role-item employee-role">
+                        <div class="system-role-icon">
+                            <i class="bi bi-person-workspace"></i>
+                        </div>
+
+                        <div class="system-role-content">
+                            <div class="system-role-title">
+                                <h6>Employee</h6>
+                                <span class="role-level employee-level">
+                                    LIMITED ACCESS
+                                </span>
+                            </div>
+
+                            <p>
+                                Can manage assigned operational tasks,
+                                view orders, and process customer purchases.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Customer -->
+                    <div class="system-role-item customer-role">
+                        <div class="system-role-icon">
+                            <i class="bi bi-person"></i>
+                        </div>
+
+                        <div class="system-role-content">
+                            <div class="system-role-title">
+                                <h6>Customer</h6>
+                                <span class="role-level customer-level">
+                                    BASIC ACCESS
+                                </span>
+                            </div>
+
+                            <p>
+                                Can browse books, manage their shopping cart,
+                                place orders, and view their own order history.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Role Permissions -->
+            <div class="role-card permissions-card">
+
+                <div class="role-card-header">
+                    <div class="role-icon">
+                        <i class="bi bi-key"></i>
+                    </div>
+                    <div>
+                        <h5>Role Permissions</h5>
+                        <p>Access level and available system operations</p>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table permissions-table align-middle">
+                        <thead>
+                            <tr>
+                                <th>PERMISSION</th>
+                                <th>ADMIN</th>
+                                <th>EMPLOYEE</th>
+                                <th>CUSTOMER</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>User Management</td>
+                                <td><i class="bi bi-check-circle-fill allowed"></i></td>
+                                <td><i class="bi bi-x-circle denied"></i></td>
+                                <td><i class="bi bi-x-circle denied"></i></td>
+                            </tr>
+
+                            <tr>
+                                <td>Product Management</td>
+                                <td><i class="bi bi-check-circle-fill allowed"></i></td>
+                                <td><i class="bi bi-check-circle-fill allowed"></i></td>
+                                <td><i class="bi bi-x-circle denied"></i></td>
+                            </tr>
+
+                            <tr>
+                                <td>Category Management</td>
+                                <td><i class="bi bi-check-circle-fill allowed"></i></td>
+                                <td><i class="bi bi-check-circle-fill allowed"></i></td>
+                                <td><i class="bi bi-x-circle denied"></i></td>
+                            </tr>
+
+                            <tr>
+                                <td>Order Management</td>
+                                <td><i class="bi bi-check-circle-fill allowed"></i></td>
+                                <td><i class="bi bi-check-circle-fill allowed"></i></td>
+                                <td><i class="bi bi-x-circle denied"></i></td>
+                            </tr>
+
+                            <tr>
+                                <td>Place Orders</td>
+                                <td><i class="bi bi-check-circle-fill allowed"></i></td>
+                                <td><i class="bi bi-x-circle denied"></i></td>
+                                <td><i class="bi bi-check-circle-fill allowed"></i></td>
+                            </tr>
+
+                            <tr>
+                                <td>View Own Orders</td>
+                                <td><i class="bi bi-check-circle-fill allowed"></i></td>
+                                <td><i class="bi bi-check-circle-fill allowed"></i></td>
+                                <td><i class="bi bi-check-circle-fill allowed"></i></td>
+                            </tr>
+
+                            <tr>
+                                <td>System Settings</td>
+                                <td><i class="bi bi-check-circle-fill allowed"></i></td>
+                                <td><i class="bi bi-x-circle denied"></i></td>
+                                <td><i class="bi bi-x-circle denied"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="permissions-legend">
+                    <span>
+                        <i class="bi bi-check-circle-fill allowed"></i>
+                        Allowed
+                    </span>
+
+                    <span>
+                        <i class="bi bi-x-circle denied"></i>
+                        Not Allowed
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
