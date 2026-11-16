@@ -1,9 +1,11 @@
+using BulkiBook.Business.Interfaces;
 using BulkiBook.Utility;
 using BulkyBook.Models;
 using BulkyBook.Models.ModelViews;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Numerics;
 namespace BulkiBookWeb.Areas.Identity.Controllers
 {
     [Area("Identity")]
@@ -12,11 +14,13 @@ namespace BulkiBookWeb.Areas.Identity.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        public AccountController(UserManager<ApplicationUser> user, SignInManager<ApplicationUser> sign, RoleManager<IdentityRole> role)
+        private readonly IShoppingCartServices _shoppingCartServices;     
+        public AccountController(UserManager<ApplicationUser> user, SignInManager<ApplicationUser> sign, RoleManager<IdentityRole> role, IShoppingCartServices shoppingCart)
         {
             _userManager    = user;
             _signInManager  = sign;
             _roleManager    = role;
+            _shoppingCartServices = shoppingCart;
         }
         public IActionResult Login(string? returnUrl = null)
         {
@@ -33,6 +37,12 @@ namespace BulkiBookWeb.Areas.Identity.Controllers
                     login.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    var user = await _userManager.FindByEmailAsync(login.Email);
+                    if(user is not null)
+                    {
+                        var count = await _shoppingCartServices.GetCartCountAsync(user.Id);
+                        HttpContext.Session.SetInt32(SD.SessionCart, count);
+                    }
                     if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
                     {
                         Redirect(returnUrl);
@@ -96,6 +106,8 @@ namespace BulkiBookWeb.Areas.Identity.Controllers
                     }
                     await _signInManager.SignInAsync(user, isPersistent: false);
 
+                    HttpContext.Session.SetInt32(SD.SessionCart, 0);
+
                     if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
                     {
                         return Redirect(returnUrl);
@@ -117,6 +129,7 @@ namespace BulkiBookWeb.Areas.Identity.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
+            HttpContext.Session.SetInt32(SD.SessionCart, 0);
             return RedirectToAction("Index", "Home", new { area = "Customer" });
         }
     }

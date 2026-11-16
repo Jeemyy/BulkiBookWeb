@@ -1,5 +1,4 @@
 ﻿using BulkiBook.Business.Interfaces;
-using BulkiBook.DataAccess.Migrations;
 using BulkiBook.Utility;
 using BulkyBook.Models;
 using BulkyBook.Models.ModelViews;
@@ -16,11 +15,13 @@ namespace BulkiBookWeb.Areas.Customer.Controllers
         private readonly IShoppingCartServices _shoppingCartServices;
         private readonly IApplicationUserServices _applicationUserServices;
         private readonly IOrderServices _orderServices;
-        public CartController(IProductServices product, IShoppingCartServices shoppingCartServices, IApplicationUserServices applicationUserServices, IOrderServices orderServices)
+        private readonly IEmailServices _emailServices;
+        public CartController(IProductServices product, IShoppingCartServices shoppingCartServices, IApplicationUserServices applicationUserServices, IOrderServices orderServices, IEmailServices email)
         {
             _shoppingCartServices = shoppingCartServices;
             _applicationUserServices = applicationUserServices;
             _orderServices = orderServices;
+            _emailServices = email;
         }
         public async Task<IActionResult> Index()
         {
@@ -95,6 +96,8 @@ namespace BulkiBookWeb.Areas.Customer.Controllers
 
             await _orderServices.CreateOrderAsync(shoppingCartVM.OrderHeader);
 
+            var user = await _applicationUserServices.GetUserByIdAsync(userId);
+            await _emailServices.SendOrderEmailConfirmationAsync(user.Email, shoppingCartVM.OrderHeader.Id, (decimal)shoppingCartVM.OrderHeader.OrderTotal);
 
             return RedirectToAction(nameof(OrderConfirmation), new { id = shoppingCartVM.OrderHeader.Id });
         }
@@ -111,6 +114,9 @@ namespace BulkiBookWeb.Areas.Customer.Controllers
             }
             cartItems.Count++;
             await _shoppingCartServices.UpdateCartAsync(cartItems);
+
+            await UpdateCartSessionAsync();
+
             return RedirectToAction(nameof(Index));
         }
         public async Task<IActionResult> Minus(int cartId)
@@ -122,6 +128,9 @@ namespace BulkiBookWeb.Areas.Customer.Controllers
             }
             cartItems.Count--;
             await _shoppingCartServices.UpdateCartAsync(cartItems);
+
+            await UpdateCartSessionAsync();
+
             return RedirectToAction(nameof(Index));
         }
         public async Task<IActionResult> Remove(int cartId)
@@ -129,6 +138,9 @@ namespace BulkiBookWeb.Areas.Customer.Controllers
             var cartItems = await _shoppingCartServices.GetCartByIdAsync(cartId);
             cartItems.Count = 0;
             await _shoppingCartServices.UpdateCartAsync(cartItems);
+
+            await UpdateCartSessionAsync();
+
             return RedirectToAction(nameof(Index));
         }
         public async Task<IActionResult> UpdateCart(int cartId, int count)
@@ -155,7 +167,21 @@ namespace BulkiBookWeb.Areas.Customer.Controllers
                 }
             }
             await _shoppingCartServices.UpdateCartAsync(cartItems);
+
+            await UpdateCartSessionAsync();
+
             return Ok(new { success = true });
+        }
+
+        private async Task UpdateCartSessionAsync()
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (!string.IsNullOrEmpty(userId))
+            {
+                var count = await _shoppingCartServices.GetCartCountAsync(userId);
+                HttpContext.Session.SetInt32(SD.SessionCart, count);
+            }
         }
     }
 }
