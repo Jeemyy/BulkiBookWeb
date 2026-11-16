@@ -15,6 +15,7 @@ namespace BulkiBook.Business
             services.AddScoped<IShoppingCartServices, ShoppingCartServices>();
             services.AddScoped<IApplicationUserServices, ApplicationUserServices>();
             services.AddScoped<IOrderServices, OrderServices>();
+            services.AddHttpClient<IEmailServices, EmailServices>();
             return services;
         }
     }
